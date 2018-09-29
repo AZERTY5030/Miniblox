@@ -12,4 +12,9 @@ and thats all
 ```the input tree
 	Input (class)
 		Input.KeyUpdate() [byte function]
-			returns key states```
+			returns key states
+```
+
+##VSF
+Virtual Shader File
+used for Fragment Shaders, Vertex Shaders and others.

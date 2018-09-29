@@ -3,21 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenGL;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using System.Drawing;
+
+/// <summary>
+/// MINIBLOXGAME9.2
+/// </summary>
 
 namespace Miniblox
 {
     public abstract class MINIBLOXGAME : GameWindow
     {
         private Color4 bg;
+        private bool uII;
+        private byte[] cKeys;
+        private bool useDisposeB;
 
-        public MINIBLOXGAME(int width, int height, string title, Color4 bgColor) : base(width, height, GraphicsMode.Default, title)
+        public MINIBLOXGAME(int width, int height, string title, Color4 bgColor, bool useIndependantInputs = false, bool useDispose = false)  : base(width, height, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default, 4, 0, GraphicsContextFlags.ForwardCompatible)
         {
             bg = bgColor;
+            useDisposeB = useDispose;
+
+            uII = useIndependantInputs;
 
             Console.WriteLine("game is being run");
             Run();
@@ -27,12 +37,20 @@ namespace Miniblox
 
         protected override void OnLoad(EventArgs e)
         {
+            CursorVisible = true;
             MiniInitialize(e);
         }
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            Input.KeyUpdate();
-            MiniUpdate(e);
+            if(uII == false)
+            {
+                cKeys = Input.ByteKeyUpdate();
+            } else
+            {
+                KeyMethod(cKeys);
+            }
+            
+            MiniUpdate(cKeys, e);
         }
         protected override void OnRenderFrame(FrameEventArgs e)
         {
@@ -41,7 +59,22 @@ namespace Miniblox
         protected override void OnClosed(EventArgs e)
         {
             MiniClose(e);
-            Dispose();
+            if (useDisposeB == true)
+            {
+                Dispose();
+            }
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            GL.Viewport(0, 0, Width, Height);
+
+            base.OnResize(e);
+        }
+
+        protected virtual byte[] KeyMethod(byte[] cKeys) /// OVERRIDE WHEN UII = TRUE
+        {
+            return cKeys;
         }
 
         // virtual overrides
@@ -50,17 +83,17 @@ namespace Miniblox
         {
             Console.WriteLine("starting");
         }
-        protected virtual void MiniUpdate(FrameEventArgs e = null)
+        protected virtual byte[] MiniUpdate(byte[] Keys, FrameEventArgs e = null)
         {
-
+            return Keys;
         }
         protected virtual void MiniRender(FrameEventArgs e = null)
         {
-            Gl.ClearColor(bg.R, bg.G, bg.B, bg.A);
+            GL.ClearColor(bg.R, bg.G, bg.B, bg.A);
             Console.WriteLine("CLEARCOLOR");
-            Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             Console.WriteLine("CLEAR");
-
+            
             SwapBuffers();
             Console.WriteLine("SWAPPED BUFFERS");
         }

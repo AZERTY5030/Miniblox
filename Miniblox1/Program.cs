@@ -4,21 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+using OpenTK.Graphics.OpenGL4;
 
 // entry point
 
+/// <summary>
+/// PG9.2
+/// </summary>
+
 namespace Miniblox
 {
-    class Program
+    static class Program
     {
-
-        static void Main(string[] args)
+        [STAThread]
+        static void Main()
         {
-            using (Toolkit.Init())
+            try
             {
-                new TestGame(1200, 600, "Miniblox Game Engine");
+                new TestGame(1000, 600, "TESTGAME 1").Run(60);
+            } catch
+            {
+                Console.WriteLine("exit error!");
             }
-
         }
     }
 }

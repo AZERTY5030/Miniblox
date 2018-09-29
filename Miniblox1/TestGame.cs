@@ -10,12 +10,13 @@ using OpenTK.Input;
 using System.Drawing;
 
 // GAME EXAMPLE: EDIT Program.cs's value TestGame to change the current game.
+// based off of MINIBLOXGAME9
 
 namespace Miniblox
 {
     public class TestGame : MINIBLOXGAME
     {
-        public TestGame(int width, int height, string title) : base(width, height, title, Color4.BlueViolet)
+        public TestGame(int width, int height, string title) : base(width, height, title, Color4.BlueViolet, true)
         {
             
         }
@@ -34,9 +35,22 @@ namespace Miniblox
         {
             base.MiniInitialize(e);
         }
-        protected override void MiniUpdate(FrameEventArgs e = null)
+        protected override byte[] MiniUpdate(byte[] cKeys, FrameEventArgs e = null)
         {
-            base.MiniUpdate(e);
+            KeyMethod(null);
+
+            return base.MiniUpdate(cKeys,e);
+        }
+        protected override byte[] KeyMethod(byte[] cKeys)
+        {
+            var KeyState = Keyboard.GetState();
+
+            if (KeyState.IsKeyDown(Key.Escape))
+            {
+                Exit();
+            }
+
+            return null;
         }
     }
 }

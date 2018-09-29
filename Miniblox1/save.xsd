@@ -32,4 +32,5 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="minibloxAuth" type="MinibloxAuthentication"></xs:element>
+  <xs:element name="Instance" type="minibloxOBJ"></xs:element>
 </xs:schema>

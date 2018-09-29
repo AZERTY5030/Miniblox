@@ -7,6 +7,10 @@ using OpenTK.Input;
 using OpenTK;
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// INPUT5
+/// </summary>
+
 namespace Miniblox
 {
     public class Input /// basic input class
@@ -16,7 +20,7 @@ namespace Miniblox
         static extern bool GetKeyboardState(byte[] lpKeyState);
 
         // key update
-        internal static byte[] KeyUpdate() /// returns all keys state
+        internal static byte[] ByteKeyUpdate() /// returns all keys state
         {
             var keys = new byte[256];
 
