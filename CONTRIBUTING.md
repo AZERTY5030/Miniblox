@@ -1,0 +1,1 @@
+Before doing ANYTHING to the master branch, first make a custom branch to demonstrate what you will add, and what you will do, then AZERTY5030 or Ryelow will authenticate that this is OK and will add to the master branch, If you were to ask, you can get permissions to write inside of the Master branch directly.
