@@ -22,20 +22,20 @@ namespace Miniblox
 
         protected override void OnLoad(EventArgs e)
         {
-            MiniInitialize();
+            MiniInitialize(e);
         }
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             Input.KeyUpdate();
-            MiniUpdate();
+            MiniUpdate(e);
         }
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            MiniRender();
+            MiniRender(e);
         }
         protected override void OnClosed(EventArgs e)
         {
-            MiniClose();
+            MiniClose(e);
             Dispose();
         }
 
@@ -45,7 +45,7 @@ namespace Miniblox
         {
             if(e==null)
             {
-                Console.WriteLine("no event arguements passed");
+                Console.WriteLine("protected virtual void MiniInitialize: no event arguements passed");
             } else
             {
 
@@ -55,7 +55,7 @@ namespace Miniblox
         {
             if (e == null)
             {
-                Console.WriteLine("no event arguements passed");
+                Console.WriteLine("protected virtual void MiniUpdate: no event arguements passed");
             }
             else
             {
@@ -66,7 +66,7 @@ namespace Miniblox
         {
             if (e == null)
             {
-                Console.WriteLine("no event arguements passed");
+                Console.WriteLine("protected virtual void MiniRender: no event arguements passed");
             }
             else
             {
@@ -75,7 +75,14 @@ namespace Miniblox
         }
         protected virtual void MiniClose(EventArgs e = null)
         {
+            if (e == null)
+            {
+                Console.WriteLine("protected virtual void MiniClose: no event arguements passed");
+            }
+            else
+            {
 
+            }
         }
     }
 }

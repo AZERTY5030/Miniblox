@@ -11,6 +11,7 @@ namespace Miniblox
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             using (Toolkit.Init())

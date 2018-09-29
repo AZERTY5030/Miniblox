@@ -9,6 +9,8 @@ using OpenTK.Graphics;
 using OpenTK.Input;
 using System.Drawing;
 
+// GAME EXAMPLE: EDIT Program.cs's value TestGame to change the current game.
+
 namespace Miniblox
 {
     public class TestGame : MINIBLOXGAME
@@ -34,7 +36,7 @@ namespace Miniblox
 
 
             Gl.Flush();
-            
+            SwapBuffers();
         }
         protected override void MiniInitialize(EventArgs e = null)
         {
