@@ -13,5 +13,3 @@ and thats all
 	Input (class)
 		Input.KeyUpdate() [byte function]
 			returns key states```
-
-# ok
