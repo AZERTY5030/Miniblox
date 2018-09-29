@@ -51,7 +51,7 @@ namespace Miniblox
 
             }
         }
-        protected virtual void MiniUpdate(EventArgs e = null)
+        protected virtual void MiniUpdate(FrameEventArgs e = null)
         {
             if (e == null)
             {
@@ -62,7 +62,7 @@ namespace Miniblox
 
             }
         }
-        protected virtual void MiniRender(EventArgs e = null)
+        protected virtual void MiniRender(FrameEventArgs e = null)
         {
             if (e == null)
             {

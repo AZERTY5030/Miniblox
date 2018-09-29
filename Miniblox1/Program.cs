@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 
+// entry point
+
 namespace Miniblox
 {
     class Program

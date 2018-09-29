@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenGL;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Input;
+using System.Drawing;
 
 namespace Miniblox
 {
@@ -18,11 +22,11 @@ namespace Miniblox
 
         protected override void MiniClose(EventArgs e = null)
         {
-            base.MiniClose();
+            base.MiniClose(e);
         }
-        protected override void MiniRender(EventArgs e = null)
+        protected override void MiniRender(FrameEventArgs e = null)
         {
-            base.MiniRender();
+            base.MiniRender(e);
 
             Gl.Clear(ClearBufferMask.ColorBufferBit);
             Gl.ClearColor(0, 0, 255, 0);
@@ -34,11 +38,11 @@ namespace Miniblox
         }
         protected override void MiniInitialize(EventArgs e = null)
         {
-            base.MiniInitialize();
+            base.MiniInitialize(e);
         }
-        protected override void MiniUpdate(EventArgs e = null)
+        protected override void MiniUpdate(FrameEventArgs e = null)
         {
-            base.MiniUpdate();
+            base.MiniUpdate(e);
         }
     }
 }
