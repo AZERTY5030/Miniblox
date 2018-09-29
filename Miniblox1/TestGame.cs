@@ -15,9 +15,9 @@ namespace Miniblox
 {
     public class TestGame : MINIBLOXGAME
     {
-        public TestGame(int width, int height, string title) : base(width, height, title)
+        public TestGame(int width, int height, string title) : base(width, height, title, Color4.BlueViolet)
         {
-
+            
         }
 
         // overrides
@@ -29,14 +29,6 @@ namespace Miniblox
         protected override void MiniRender(FrameEventArgs e = null)
         {
             base.MiniRender(e);
-
-            Gl.Clear(ClearBufferMask.ColorBufferBit);
-            Gl.ClearColor(0, 0, 255, 0);
-
-
-
-            Gl.Flush();
-            SwapBuffers();
         }
         protected override void MiniInitialize(EventArgs e = null)
         {

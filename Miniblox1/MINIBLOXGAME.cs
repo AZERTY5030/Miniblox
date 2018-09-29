@@ -13,8 +13,13 @@ namespace Miniblox
 {
     public abstract class MINIBLOXGAME : GameWindow
     {
-        public MINIBLOXGAME(int width, int height, string title) : base(width, height, GraphicsMode.Default, title)
+        private Color4 bg;
+
+        public MINIBLOXGAME(int width, int height, string title, Color4 bgColor) : base(width, height, GraphicsMode.Default, title)
         {
+            bg = bgColor;
+
+            Console.WriteLine("game is being run");
             Run();
         }
 
@@ -43,46 +48,50 @@ namespace Miniblox
 
         protected virtual void MiniInitialize(EventArgs e = null)
         {
-            if(e==null)
-            {
-                Console.WriteLine("protected virtual void MiniInitialize: no event arguements passed");
-            } else
-            {
-
-            }
+            Console.WriteLine("starting");
         }
         protected virtual void MiniUpdate(FrameEventArgs e = null)
         {
-            if (e == null)
-            {
-                Console.WriteLine("protected virtual void MiniUpdate: no event arguements passed");
-            }
-            else
-            {
 
-            }
         }
         protected virtual void MiniRender(FrameEventArgs e = null)
         {
-            if (e == null)
-            {
-                Console.WriteLine("protected virtual void MiniRender: no event arguements passed");
-            }
-            else
-            {
+            Gl.ClearColor(bg.R, bg.G, bg.B, bg.A);
+            Console.WriteLine("CLEARCOLOR");
+            Gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            Console.WriteLine("CLEAR");
 
-            }
+            SwapBuffers();
+            Console.WriteLine("SWAPPED BUFFERS");
         }
         protected virtual void MiniClose(EventArgs e = null)
         {
-            if (e == null)
-            {
-                Console.WriteLine("protected virtual void MiniClose: no event arguements passed");
-            }
-            else
+            Console.WriteLine("exiting");
+        }
+        protected virtual Color4 ColorConstruct(float R, float G, float B, float A)
+        {
+            Color4 ret;
+
+            ret.R = R;
+            ret.G = G;
+            ret.B = B;
+            ret.A = A;
+
+            return ret;
+        }
+        protected virtual float[] ColorDeConstruct(Color4 color)
+        {
+            float[] ret =
             {
 
-            }
+            };
+
+            ret[1] = color.R;
+            ret[2] = color.G;
+            ret[3] = color.B;
+            ret[0] = color.A;
+
+            return ret;
         }
     }
 }
