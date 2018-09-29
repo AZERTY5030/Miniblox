@@ -13,9 +13,9 @@ using System.Drawing;
 
 namespace Miniblox
 {
-    public class TestGame : MINIBLOXGAME
+    public class ToExecute : MINIBLOXGAME
     {
-        public TestGame(int width, int height, string title) : base(width, height, title)
+        public ToExecute(int width, int height, string title) : base(width, height, title)
         {
 
         }

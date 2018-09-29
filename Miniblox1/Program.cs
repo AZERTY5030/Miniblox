@@ -16,7 +16,7 @@ namespace Miniblox
         {
             using (Toolkit.Init())
             {
-                new TestGame(1200, 600, "Miniblox Game Engine");
+                new ToExecute(1200, 600, "Miniblox v1");
             }
 
         }
