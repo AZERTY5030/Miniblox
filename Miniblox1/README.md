@@ -9,9 +9,9 @@ You need packages:
 and thats all
 
 ## How to use the Input class
-the input tree
+```the input tree
 	Input (class)
 		Input.KeyUpdate() [byte function]
-			returns key states
+			returns key states```
 
 # ok
