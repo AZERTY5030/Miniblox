@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="OBJRoot"
+    targetNamespace="http://tempuri.org/XMLSchema1.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/XMLSchema1.xsd"
+    xmlns:mstns="http://tempuri.org/XMLSchema1.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:complexType name="GameBooler">
+    <xs:sequence>
+      <xs:element name="GAME" type="minibloxOBJ"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType  xmlns:xs="http://www.w3.org/2001/XMLSchema" name="minibloxOBJ">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string">
+        
+      </xs:element>
+      <xs:element name="POS" type="Position"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Position">
+    <xs:sequence>
+      <xs:element name="X" type="xs:float"/>
+      <xs:element name="Y" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MinibloxAuthentication">
+    <xs:sequence>
+      <xs:element name="AUTH" type="xs:string"></xs:element>
+      <xs:element name="GAME" type="GameBooler"></xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="minibloxAuth" type="MinibloxAuthentication"></xs:element>
+</xs:schema>
