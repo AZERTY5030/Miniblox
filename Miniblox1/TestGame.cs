@@ -8,6 +8,9 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using System.Drawing;
+using OpenTK.Graphics.OpenGL4;
+using ShaderType = OpenTK.Graphics.OpenGL4.ShaderType;
+using System.IO;
 
 // GAME EXAMPLE: EDIT Program.cs's value TestGame to change the current game.
 // based off of MINIBLOXGAME9
@@ -16,9 +19,19 @@ namespace Miniblox
 {
     public class TestGame : MINIBLOXGAME
     {
-        public TestGame(int width, int height, string title) : base(width, height, title, Color4.BlueViolet, true)
+        // put game code here
+
+        void RunGame()
         {
-            
+
+        }
+
+        public TestGame(int width, int height, string title) : base(width, height, title, Color4.SkyBlue, true)
+        {
+            // add any code here
+
+            // start the game
+            RunGame();
         }
 
         // overrides
