@@ -1,11 +1,1 @@
-#version 450 core
-
-layout (location = 0) in vec4 position;
-layout(location = 1) in vec4 color;
-out vec4 vs_color;
-
-void main(void)
-{
- gl_Position = position;
- vs_color = color;
-}
+wOZMFRTWjPnrbNDyOjXSPJ8NILXvdDREFGw88FfkKA9V965ntZ2RU8jp8uO4bwBfQ6sSjkJnf1wN5pz6YHLf+WNC5vkHR0U69sQoZXmcehqw0OqJf5nab1neCV+VetPf/+QZpD/3jjypZg6RuF+pz9ye6LkoalXN3jYbK1z8ovFdsQR0OAkRnsQxLrRoLz9+2ntuOZ7HmfFXTFqLMLCohvgyTSew+EUV4mvGJW3kGHqyhgerqHZKNGq9UP/5iNqEXTDUSVjXPxEJT4Cvzsn+J0/5Dpi4VrpoIZUInjKBZtYCIN+uJ1jkng8Rtl8U6mc9Wrw26UeFcn1g6g+lHHREaw==

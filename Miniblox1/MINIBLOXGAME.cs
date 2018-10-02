@@ -12,13 +12,41 @@ using System.IO;
 using System.Diagnostics;
 using static Miniblox.MINIBLOXGAME;
 using static Miniblox.RenderObject;
+using ObjectService;
+using VSFProtect;
+using Discord;
+using Microsoft.CSharp;
 
 /// <summary>
-/// MINIBLOXGAME9.2
+/// MINIBLOXGAME10
 /// </summary>
 
 namespace Miniblox
 {
+    
+    public struct Vertex
+    {
+        public const int Size = (4 + 4) * 4; // size of struct in bytes
+
+        private readonly Vector4 _position;
+        private readonly Color4 _color;
+
+        public Vertex(Vector4 position, Color4 color)
+        {
+            _position = position;
+            _color = color;
+        }
+    }
+    public class PhysicObject
+    {
+        private bool _initialized;
+
+        RenderObject RenderObject;
+        public PhysicObject()
+        {
+            _initialized = true;
+        }
+    }
     public class RenderObject : IDisposable
     {
         private bool _initialized;
@@ -29,7 +57,47 @@ namespace Miniblox
         {
             _verticeCount = vertices.Length;
 
-            // create vertex array and buffer here
+            _vertexArray = GL.GenVertexArray();
+            _buffer = GL.GenBuffer();
+
+            // RENDERING CODE!
+            GL.BindVertexArray(_vertexArray);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _buffer);
+
+            GL.NamedBufferStorage(
+                _buffer,
+                Vertex.Size * vertices.Length,        // the size needed by this buffer
+                vertices,                           // data to initialize with
+                BufferStorageFlags.MapWriteBit
+            );    // at this point we will only write to the buffer
+
+            GL.VertexArrayAttribBinding(_vertexArray, 0, 0);
+            GL.EnableVertexArrayAttrib(_vertexArray, 0);
+            GL.VertexArrayAttribFormat(
+                _vertexArray,
+                0,                      // attribute index, from the shader location = 0
+                4,                      // size of attribute, vec4
+                VertexAttribType.Float, // contains floats
+                false,                  // does not need to be normalized as it is already, floats ignore this flag anyway
+                0
+            );                     // relative offset, first item
+
+            GL.VertexArrayAttribBinding(_vertexArray, 1, 0);
+            GL.EnableVertexArrayAttrib(_vertexArray, 1);
+            GL.VertexArrayAttribFormat(
+                _vertexArray,
+                1,                      // attribute index, from the shader location = 1
+                4,                      // size of attribute, vec4
+                VertexAttribType.Float, // contains floats
+                false,                  // does not need to be normalized as it is already, floats ignore this flag anyway
+            16);                     // relative offset after a vec4
+
+            GL.VertexArrayVertexBuffer(_vertexArray, 0, _buffer, IntPtr.Zero, Vertex.Size);
+
+
+            GL.BindVertexArray(_vertexArray);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+
 
             _initialized = true;
         }
@@ -75,9 +143,13 @@ namespace Miniblox
 
         private int CompileShader(ShaderType type, string path)
         {
-            Debug.WriteLine($"Creating Shader, Path:" + path + ". Code: " + File.ReadAllText(path));
+            Debug.WriteLine($"Creating Shader, Path:" + path + ". Encrypted: " + File.ReadAllText(path));
+            Debug.WriteLine($"Decrypted:" + StringCipher.Decrypt(File.ReadAllText(path), "VSFProtectM"));
+
+            string EnCode = StringCipher.Decrypt(File.ReadAllText(path), "VSFProtectM");
+
             var shader = GL.CreateShader(type);
-            var src = File.ReadAllText(path);
+            var src = EnCode;
             GL.ShaderSource(shader, src);
             GL.CompileShader(shader);
             var info = GL.GetShaderInfoLog(shader);
@@ -108,26 +180,14 @@ namespace Miniblox
             return program;
         }
 
-        public struct Vertex
-        {
-            public const int Size = (4 + 4) * 4; // size of struct in bytes
-
-            private readonly Vector4 _position;
-            private readonly Color4 _color;
-
-            public Vertex(Vector4 position, Color4 color)
-            {
-                _position = position;
-                _color = color;
-            }
-        }
-
         public MINIBLOXGAME(int width, int height, string title, Color4 bgColor, bool useIndependantInputs = false, bool useDispose = false)  : base(width, height, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default, 4, 0, GraphicsContextFlags.ForwardCompatible)
         {
             bg = bgColor;
             useDisposeB = useDispose;
 
             uII = useIndependantInputs;
+
+            
 
             Console.WriteLine("game is being run");
             Run();
@@ -150,7 +210,7 @@ namespace Miniblox
 
         // overrides
 
-        private List<RenderObject> _renderObjects = new List<RenderObject>();
+        public List<RenderObject> renderObjects = new List<RenderObject>();
 
         protected override void OnLoad(EventArgs e)
         {
@@ -160,7 +220,11 @@ namespace Miniblox
               new Vertex(new Vector4( 0.0f, -0.25f, 0.5f, 1-0f), Color4.HotPink),
               new Vertex(new Vector4( 0.25f, 0.25f, 0.5f, 1-0f), Color4.HotPink),
              };
-            _renderObjects.Add(new RenderObject(vertices));
+            renderObjects.Add(new RenderObject(vertices));
+
+            vertices = ObjectFactory.CreateSolidCube(0.2f, Color4.Gray);
+
+            renderObjects.Add(new RenderObject(vertices));
 
             CursorVisible = true;
 
@@ -184,12 +248,21 @@ namespace Miniblox
         }
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            GL.ClearColor(bg.R, bg.G, bg.B, bg.A);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            GL.UseProgram(_program);
+            foreach (var renderObject in renderObjects)
+                renderObject.Render();
+
+            SwapBuffers();
+
             MiniRender(e);
         }
         protected override void OnClosed(EventArgs e)
         {
             Debug.WriteLine("Exit called");
-            foreach (var obj in _renderObjects)
+            foreach (var obj in renderObjects)
                 obj.Dispose();
             GL.DeleteProgram(_program);
             MiniClose(e);
@@ -201,7 +274,7 @@ namespace Miniblox
 
         protected override void OnResize(EventArgs e)
         {
-            GL.Viewport(0, 0, Width, Height);
+            // GL.Viewport(0, 0, Width, Height);
 
             base.OnResize(e);
         }
@@ -223,14 +296,7 @@ namespace Miniblox
         }
         protected virtual void MiniRender(FrameEventArgs e = null)
         {
-            GL.ClearColor(bg.R, bg.G, bg.B, bg.A);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.UseProgram(_program);
-            foreach (var renderObject in _renderObjects)
-                renderObject.Render();
-
-            SwapBuffers();
         }
         protected virtual void MiniClose(EventArgs e = null)
         {

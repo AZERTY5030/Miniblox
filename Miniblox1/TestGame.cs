@@ -23,12 +23,13 @@ namespace Miniblox
 
         void RunGame()
         {
+            // put starting code here
 
         }
 
         public TestGame(int width, int height, string title) : base(width, height, title, Color4.SkyBlue, true)
         {
-            // add any code here
+            // add any code here that should be ran during start
 
             // start the game
             RunGame();

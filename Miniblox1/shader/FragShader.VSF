@@ -1,8 +1,1 @@
-#version 450 core
-in vec4 vs_color;
-out vec4 color;
-
-void main(void)
-{
- color = vs_color;
-}
+La+WCSyVdbmxfhvfDfKBHah/1djp5jtiQ7+p41W6edQYWtyq7l117ULZo4MLQ76rW+0ByLIpF2BQ27OdyAqnLc+Nl57NN7JObqVY99cmcmrO468nY+q5u2N3YMbMSOshAM/e1sKZpye6C2cv+TfWlXerEEYEjKbqrE6aGE5idpmbmC94UF15/X382MX/bDpe2blWswhUusYfaOxSks8p3EQKQ+wiBSrLW7aOzW8qJKGm0i4sXLXcSkK8+OLWO83P
